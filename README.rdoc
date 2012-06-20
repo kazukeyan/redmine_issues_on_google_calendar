@@ -1,5 +1,5 @@
 = issues_on_google_calendar
 
-RedmineとGoogleカレンダーを連携させるための
-Redmineプラグイン
-Redmine1.2.3で開発中
+Redmine縺ｨGoogle繧ｫ繝ｬ繝ｳ繝繝ｼ繧帝｣謳ｺ縺輔○繧九◆繧√�ｮ
+Redmine繝励Λ繧ｰ繧､繝ｳ
+Redmine1.2.3縺ｧ髢狗匱荳ｭ
