@@ -2,3 +2,4 @@
 
 RedmineとGoogleカレンダーを連携させるための
 Redmineプラグイン
+Redmine1.2.3で開発中
