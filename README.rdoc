@@ -1,0 +1,4 @@
+= issues_on_google_calendar
+
+RedmineとGoogleカレンダーを連携させるための
+Redmineプラグイン
