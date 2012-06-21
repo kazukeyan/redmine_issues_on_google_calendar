@@ -10,7 +10,6 @@ module RedmineIssuesOnGoogleCalendar
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
         has_one :event,  :class_name => 'IssueEvent', :foreign_key => 'issue_id'
-        after_save :create_google_calendar_event
       end
 
     end
