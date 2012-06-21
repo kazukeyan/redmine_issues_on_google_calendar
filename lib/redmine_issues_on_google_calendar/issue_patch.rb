@@ -30,6 +30,7 @@ module RedmineIssuesOnGoogleCalendar
         })
         self.create_event({:issue_id => self.id, :event_id => result.data.id})
       end
+      
       def update_google_calendar_event
         service = $google_api_client.discovered_api('calendar', 'v3')
         result = $google_api_client.execute({
@@ -42,6 +43,7 @@ module RedmineIssuesOnGoogleCalendar
           :headers => {'Content-Type' => 'application/json'}
         })
       end
+      
       def convert_issue_attributes_for_event
         event = {
           'summary' => self.subject,
