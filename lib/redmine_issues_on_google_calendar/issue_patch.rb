@@ -1,5 +1,5 @@
 module RedmineIssuesOnGoogleCalendar
-  # Patches Redmine's Issues dynamically.  Adds a +after_save+ filter.
+  # Patches Redmine's Issues dynamically.
   module IssuePatch
     def self.included(base) # :nodoc:
       base.extend(ClassMethods)
@@ -22,6 +22,27 @@ module RedmineIssuesOnGoogleCalendar
       # instance_methods
       def create_google_calendar_event
         service = $google_api_client.discovered_api('calendar', 'v3')
+        result = $google_api_client.execute({
+          :api_method => service.events.insert,
+          :parameters => {'calendarId' => self.project.calendar.calendar_id},
+          :body => JSON.dump(convert_issue_attributes_for_event),
+          :headers => {'Content-Type' => 'application/json'}
+        })
+        self.create_event({:issue_id => self.id, :event_id => result.data.id})
+      end
+      def update_google_calendar_event
+        service = $google_api_client.discovered_api('calendar', 'v3')
+        result = $google_api_client.execute({
+          :api_method => service.events.update,
+          :parameters => {
+            'calendarId' => self.project.calendar.calendar_id,
+            'eventId' => self.event.event_id
+          },
+          :body => JSON.dump(convert_issue_attributes_for_event),
+          :headers => {'Content-Type' => 'application/json'}
+        })
+      end
+      def convert_issue_attributes_for_event
         event = {
           'summary' => self.subject,
           'start' => {
@@ -31,13 +52,6 @@ module RedmineIssuesOnGoogleCalendar
             'date' => self.due_date.to_s
           }
         }
-        result = $google_api_client.execute({
-          :api_method => service.events.insert,
-          :parameters => {'calendarId' => self.project.calendar.calendar_id},
-          :body => JSON.dump(event),
-          :headers => {'Content-Type' => 'application/json'}
-        })
-        self.create_event({:issue_id => self.id, :event_id => result.data.id})
       end
     end
   end

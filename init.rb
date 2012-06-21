@@ -18,6 +18,11 @@ Dispatcher.to_prepare :redmine_issues_on_google_calendar do
     Issue.send(:include, RedmineIssuesOnGoogleCalendar::IssuePatch)
   end
 
+  require_dependency 'issues_controller'
+  unless IssuesController.included_modules.include? RedmineIssuesOnGoogleCalendar::IssuesControllerPatch
+    IssuesController.send(:include, RedmineIssuesOnGoogleCalendar::IssuesControllerPatch)
+  end
+
   require_dependency 'project'
   unless Project.included_modules.include? RedmineIssuesOnGoogleCalendar::ProjectPatch
     Project.send(:include, RedmineIssuesOnGoogleCalendar::ProjectPatch)
@@ -25,3 +30,4 @@ Dispatcher.to_prepare :redmine_issues_on_google_calendar do
 end
 
 require 'redmine_issues_on_google_calendar/hooks/controller_issues_new_after_save_hook'
+require 'redmine_issues_on_google_calendar/hooks/controller_issues_update_after_save_hook'
