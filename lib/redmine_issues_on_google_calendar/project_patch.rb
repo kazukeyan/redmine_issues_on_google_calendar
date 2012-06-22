@@ -10,6 +10,7 @@ module RedmineIssuesOnGoogleCalendar
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
         has_one :calendar,  :class_name => 'ProjectCalendar', :foreign_key => 'project_id'
+        after_save :save_google_calendar
       end
 
     end
@@ -20,6 +21,14 @@ module RedmineIssuesOnGoogleCalendar
     
     module InstanceMethods
       # instance_methods
+      def save_google_calendar
+        unless self.calendar
+          create_google_calendar
+        else
+          update_google_calendar
+        end
+      end
+      
       def create_google_calendar
         service = $google_api_client.discovered_api('calendar', 'v3')
         result = $google_api_client.execute(
