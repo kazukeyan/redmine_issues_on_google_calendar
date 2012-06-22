@@ -52,7 +52,12 @@ module RedmineIssuesOnGoogleCalendar
           },
           'end' => {
             'date' => self.due_date.to_s
-          }
+          },
+          'attendees' => [
+            {
+              'email' => self.assigned_to.mail
+            }
+          ]
         }
       end
     end
