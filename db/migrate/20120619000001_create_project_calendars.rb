@@ -1,6 +1,6 @@
 class CreateProjectCalendars < ActiveRecord::Migration
   def self.up
-    create_table :project_calendars, :id => false do |t|
+    create_table :project_calendars do |t|
       t.column :project_id, :integer, :default => 0, :null => false
       t.column :calendar_id, :string, :default => "", :null => false
     end
