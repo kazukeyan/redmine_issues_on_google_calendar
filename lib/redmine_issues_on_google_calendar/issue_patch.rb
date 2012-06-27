@@ -11,6 +11,7 @@ module RedmineIssuesOnGoogleCalendar
         unloadable # Send unloadable so it will not be unloaded in development
         has_one :event,  :class_name => 'IssueEvent', :foreign_key => 'issue_id'
         after_save :save_google_calendar_event
+        after_destroy :delete_google_calendar_event
       end
 
     end
@@ -51,6 +52,19 @@ module RedmineIssuesOnGoogleCalendar
           :body => JSON.dump(convert_issue_attributes_for_event),
           :headers => {'Content-Type' => 'application/json'}
         })
+      end
+      
+      def delete_google_calendar_event
+        service = $google_api_client.discovered_api('calendar', 'v3')
+        result = $google_api_client.execute({
+          :api_method => service.events.delete,
+          :parameters => {
+            'calendarId' => self.project.calendar.calendar_id,
+            'eventId' => self.event.event_id
+          },
+          :headers => {'Content-Type' => 'application/json'}
+        })
+        self.event.destroy
       end
       
       def convert_issue_attributes_for_event
