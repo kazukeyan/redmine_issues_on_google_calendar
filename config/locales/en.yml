@@ -1,3 +1,5 @@
-# English strings go here for Rails i18n
 en:
-  my_label: "My label"
+  project_google_calendars_edit: "Google Calendar Settings"
+  field_timezone: "Timezone"
+  field_display_format: "Format to display events"
+  field_delete_after_close: "Closing a issue, delete the event"
