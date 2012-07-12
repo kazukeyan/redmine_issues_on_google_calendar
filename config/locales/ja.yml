@@ -1,0 +1,5 @@
+ja:
+  project_google_calendars_edit: "Google Calendar設定"
+  field_timezone: "タイムゾーン"
+  field_display_format: "イベント表示形式"
+  field_delete_after_close: "チケット完了時、イベントを削除"
