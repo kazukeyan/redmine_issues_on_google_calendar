@@ -34,7 +34,7 @@ module RedmineIssuesOnGoogleCalendar
         service = $google_api_client.discovered_api('calendar', 'v3')
         result = $google_api_client.execute(
           :api_method => service.calendars.insert,
-          :body => JSON.dump(convert_project_attributes_for_event),
+          :body => JSON.dump(convert_project_attributes_for_calendar),
           :headers => {'Content-Type' => 'application/json'}
         )
         self.create_calendar({:project_id => self.id, :calendar_id => result.data.id})
@@ -45,7 +45,7 @@ module RedmineIssuesOnGoogleCalendar
         result = $google_api_client.execute(
           :api_method => service.calendars.update,
           :parameters => {'calendarId' => self.calendar.calendar_id},
-          :body => JSON.dump(convert_project_attributes_for_event),
+          :body => JSON.dump(convert_project_attributes_for_calendar),
           :headers => {'Content-Type' => 'application/json'}
         )
       end
@@ -60,8 +60,16 @@ module RedmineIssuesOnGoogleCalendar
         self.calendar.destroy
       end
 
-      def convert_project_attributes_for_event
-        calendar = {:summary => self.name, :description => self.description}
+      def convert_project_attributes_for_calendar
+        calendar = {
+          :summary => self.name,
+          :description => self.description
+          }
+        if self.calendar
+          if self.calendar.timezone.present?
+            calendar[:timeZone] = self.calendar.timezone
+          end
+        end
       end
     end
   end
