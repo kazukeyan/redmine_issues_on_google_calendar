@@ -3,3 +3,5 @@ en:
   field_timezone: "Timezone"
   field_display_format: "Format to display events"
   field_delete_after_close: "Closing a issue, delete the event"
+  migrate_to_google_calendar_events: "Migrate all tickets above to Google Calendar event"
+  text_migrate_issues_confirmation: "Are you sure you want to migrate?"
