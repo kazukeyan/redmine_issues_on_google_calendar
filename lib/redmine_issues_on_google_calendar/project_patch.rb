@@ -70,6 +70,7 @@ module RedmineIssuesOnGoogleCalendar
             calendar[:timeZone] = self.calendar.timezone
           end
         end
+        calendar
       end
     end
   end

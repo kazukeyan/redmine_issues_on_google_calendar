@@ -1,0 +1,7 @@
+<% if authorize_for :migrate_issues, :migrate_to_google_calendar_events %>
+  <%= link_to_remote(
+    l(:migrate_to_google_calendar_events),
+    :url => {:controller => 'migrate_issues', :action => 'migrate_to_google_calendar_events', :ids => issues.collect(&:id)},
+    :confirm => l(:text_migrate_issues_confirmation)
+  )%>
+<% end %>

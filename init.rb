@@ -7,7 +7,10 @@ Redmine::Plugin.register :redmine_issues_on_google_calendar do
   version '0.1.4'
   url 'https://github.com/kazukeyan/redmine_issues_on_google_calendar'
   author_url 'https://github.com/kazukeyan/'
-  permission :project_calendars, {:project_calendars => [:edit]}, :public => true
+  project_module :redmine_issues_on_google_calendar do |map|
+    map.permission :manage_google_calendar, {:project_calendars => [:edit, :update]}, :require => :member
+    map.permission :migrate_issues, {:migrate_issues => [:migrate_to_google_calendar_events]}, :require => :member
+  end
   menu :project_menu, :project_calendars, { :controller => 'project_calendars', :action => 'edit' }, :caption => 'Google Calendar', :before => :settings, :param => :project_id
 end
 
@@ -25,3 +28,5 @@ Dispatcher.to_prepare :redmine_issues_on_google_calendar do
     Project.send(:include, RedmineIssuesOnGoogleCalendar::ProjectPatch)
   end
 end
+
+require 'redmine_issues_on_google_calendar/hooks/view_issues_index_bottom_hook'
