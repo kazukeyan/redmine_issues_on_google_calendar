@@ -1,7 +1,10 @@
 class ProjectCalendarsController < ApplicationController
   unloadable
 
+  before_filter :find_project_by_project_id, :authorize
+  
   def edit
+    require 'tzinfo'
     @project = Project.find(params[:project_id])
   end
   

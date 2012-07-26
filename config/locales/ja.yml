@@ -3,3 +3,5 @@ ja:
   field_timezone: "タイムゾーン"
   field_display_format: "イベント表示形式"
   field_delete_after_close: "チケット完了時、イベントを削除"
+  migrate_to_google_calendar_events: "上記のチケットをGoogle Calendarに移行する"
+  text_migrate_issues_confirmation: "移行してもよろしいですか？"
