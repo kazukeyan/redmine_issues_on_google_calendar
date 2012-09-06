@@ -10,8 +10,11 @@ class ProjectCalendarsController < ApplicationController
   
   def update
     @project = Project.find(params[:project_id])
+    unless @project.calendar
+      @project.save_google_calendar
+    end
     if @project.calendar.update_attributes(params[:project_calendar])
-      @project.update_google_calendar
+      @project.save_google_calendar
       flash[:notice] = l(:notice_successful_update)
 
       respond_to do |format|
