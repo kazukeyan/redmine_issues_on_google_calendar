@@ -27,6 +27,11 @@ Dispatcher.to_prepare :redmine_issues_on_google_calendar do
   unless Project.included_modules.include? RedmineIssuesOnGoogleCalendar::ProjectPatch
     Project.send(:include, RedmineIssuesOnGoogleCalendar::ProjectPatch)
   end
+  
+  require_dependency 'enabled_module'
+  unless EnabledModule.included_modules.include? RedmineIssuesOnGoogleCalendar::EnabledModulePatch
+    EnabledModule.send(:include, RedmineIssuesOnGoogleCalendar::EnabledModulePatch)
+  end
 end
 
 require 'redmine_issues_on_google_calendar/hooks/view_issues_index_bottom_hook'

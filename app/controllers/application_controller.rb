@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authorize_google_oauth
 
-  # TODO: グローバル変数は出来るだけ使わないようにする
+  # TODO: 繧ｰ繝ｭ繝ｼ繝舌Ν螟画焚縺ｯ蜃ｺ譚･繧九□縺台ｽｿ繧上↑縺�繧医≧縺ｫ縺吶ｋ
   $google_api_client
 
   def ApplicationController.get_google_oauth_settings
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
   
   def authorize_google_oauth
-    if $google_api_client.authorization.refresh_token &&  $google_api_client.authorization.expired?
+    if $google_api_client.authorization.refresh_token && $google_api_client.authorization.expired?
       $google_api_client.authorization.fetch_access_token!
     end
     unless $google_api_client.authorization.access_token

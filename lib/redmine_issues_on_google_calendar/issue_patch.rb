@@ -10,8 +10,8 @@ module RedmineIssuesOnGoogleCalendar
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
         has_one :event,  :class_name => 'IssueEvent', :foreign_key => 'issue_id'
-        after_save :save_google_calendar_event, :if => :enable_google_calendar
-        after_destroy :delete_google_calendar_event, :if => :enable_google_calendar
+        after_save :save_google_calendar_event, :if => Proc.new { |issue| issue.project.module_enabled?("redmine_issues_on_google_calendar") }
+        after_destroy :delete_google_calendar_event, :if => Proc.new { |issue| issue.project.module_enabled?("redmine_issues_on_google_calendar") }
       end
 
     end
@@ -22,9 +22,6 @@ module RedmineIssuesOnGoogleCalendar
     
     module InstanceMethods
       # instance_methods
-      def enable_google_calendar
-        Proc.new { |issue| issue.project.module_enabled?("redmine_issues_on_google_calendar") }
-      end
       def save_google_calendar_event
         unless self.event
           create_google_calendar_event
