@@ -10,8 +10,8 @@ module RedmineIssuesOnGoogleCalendar
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
         has_one :calendar,  :class_name => 'ProjectCalendar', :foreign_key => 'project_id'
-        after_save :save_google_calendar
-        after_destroy :delete_google_calendar
+        after_save :save_google_calendar, :if => Proc.new { |project| project.module_enabled?("redmine_issues_on_google_calendar") }
+        after_destroy :delete_google_calendar, :if => Proc.new { |project| project.module_enabled?("redmine_issues_on_google_calendar") }
       end
 
     end
